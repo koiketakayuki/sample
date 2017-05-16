@@ -1,0 +1,26 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koiketakayuki/sample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koiketakayuki/sample/issues"
+  },
+  "homepage": "https://github.com/koiketakayuki/sample#readme",
+  "dependencies": {
+    "ameba-core": "https://github.com/koiketakayuki/ameba-core.git",
+    "ameba-mongodb-store": "https://github.com/koiketakayuki/ameba-mongodb-store.git",
+    "ameba-util": "^0.9.1",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
+}

@@ -42,8 +42,11 @@ export default class Home extends React.Component {
     const offset = DISPLAY_COUNT * (pageNumber ? pageNumber : 1);
 
     return new Promise((success, failure) => {
-      $.post('http://127.0.0.1:3000/read/payment-information-request',
-      { condition: {}, option: { limit: DISPLAY_COUNT, offset } },
+      $.post('http://127.0.0.1:3000/read',
+      {
+        recordTypeId: 'PaymentInformationRequest',
+        condition: {},
+        option: { limit: DISPLAY_COUNT, offset } },
       res => {
         success(res);
       });

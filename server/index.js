@@ -19,7 +19,7 @@ const storeConfig = {
   port: 27017,
   db: 'ameba',
   user: 'amebaadmin',
-  password: 'ameba7531',
+  password: 'password',
 };
 
 const storeService = require('ameba-service')(storeConfig);

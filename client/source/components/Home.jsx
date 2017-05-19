@@ -13,6 +13,7 @@ import AppBar from 'material-ui/AppBar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FlatButton from 'material-ui/FlatButton';
+import dateFormat from'dateformat';
 
 import {
   Table,
@@ -72,6 +73,7 @@ export default class Home extends React.Component {
               labelPosition="after"
               primary={true}
               icon={<ContentAdd />}
+              onTouchTap={() => console.log("test")}
               />}
           />
           <Table>
@@ -87,7 +89,7 @@ export default class Home extends React.Component {
               <TableRow>
                 <TableRowColumn>{r.shopId}</TableRowColumn>
                 <TableRowColumn>{r.status}</TableRowColumn>
-                <TableRowColumn>{r.date}</TableRowColumn>
+                <TableRowColumn>{dateFormat(new Date(r.date),'yyyy年m月d日 H:MM')}</TableRowColumn>
               </TableRow>)}
             </TableBody>
           </Table>

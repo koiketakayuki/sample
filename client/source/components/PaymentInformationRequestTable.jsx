@@ -4,6 +4,7 @@ import PaymentInformationRequestFormDialog from './PaymentInformationRequestForm
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FlatButton from 'material-ui/FlatButton';
 import dateFormat from'dateformat';
+import RecordTable from 'record-table';
 
 import {
   Table,
@@ -20,12 +21,12 @@ export default class PaymentInformationRequestTable extends React.Component {
 
   constructor() {
     super();
-    this.state = { paymentInformationRequests: [], open: false };
+    this.state = { paymentInformationRequests: [], open: false, count: 0 };
   }
 
   componentDidMount() {
     this.getPaymentInformationRequestCount().then((count) => {
-      console.log(count);
+      this.setState({ count });
     });
     this.getPaymentInformationRequests().then(pir => {
       this.setState({ paymentInformationRequests: pir });
@@ -42,14 +43,14 @@ export default class PaymentInformationRequestTable extends React.Component {
 
   getPaymentInformationRequestCount(condition) {
     return new Promise((success, failure) => {
-      $.post('http://127.0.0.1:3000/read',
-      {
-        recordTypeId: 'PaymentInformationRequest',
-        condition: {},
-        option: { count: true }
-      },
+      $.post('http://127.0.0.1:3000/count',
+      { recordTypeId: 'PaymentInformationRequest', condition },
       res => {
-        success(res);
+        if (res.ok) {
+          success(res.count);
+        } else {
+          failure(count);
+        }
       });
     });
   }
@@ -66,7 +67,11 @@ export default class PaymentInformationRequestTable extends React.Component {
         option: { limit: DISPLAY_COUNT, offset }
       },
       res => {
-        success(res);
+        if (res.ok) {
+          success(res.result);
+        } else {
+          failure(res.message);
+        }
       });
     });
   }
@@ -84,6 +89,10 @@ export default class PaymentInformationRequestTable extends React.Component {
         <PaymentInformationRequestFormDialog
           open={this.state.open}
           onRequestClose={this.handleClose}/>
+        <div>
+          全<span>{this.state.count}</span>件
+          <RecordTable recordType={{}}/>
+        </div>
         <Table>
             <TableHeader displaySelectAll={false}>
             <TableRow>
@@ -94,11 +103,11 @@ export default class PaymentInformationRequestTable extends React.Component {
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
             {this.state.paymentInformationRequests.map(r => 
-                <TableRow>
-                    <TableRowColumn>{r.shopId}</TableRowColumn>
-                    <TableRowColumn>{r.status}</TableRowColumn>
-                    <TableRowColumn>{dateFormat(new Date(r.date),'yyyy年m月d日 H:MM')}</TableRowColumn>
-                </TableRow>)}
+              <TableRow>
+                <TableRowColumn>{r.shopId}</TableRowColumn>
+                <TableRowColumn>{r.status}</TableRowColumn>
+                <TableRowColumn>{dateFormat(new Date(r.date),'yyyy年m月d日 H:MM')}</TableRowColumn>
+              </TableRow>)}
             </TableBody>
         </Table>
       </div>

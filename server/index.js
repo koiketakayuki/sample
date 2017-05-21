@@ -3,15 +3,18 @@ const Core = require('ameba-core');
 const util = require('ameba-util');
 
 const textField = Core.textField;
-const enumerationField = Core.enumerationField;
+const enumerationType = Core.enumerationType;
 const dateField = Core.dateField;
+const recordField = Core.recordField;
 const createRecord = util.createRecord;
 
-const PaymentInformationRequest = Core.recordType('PaymentInformationRequest', [
-    textField('shopId'),
-    enumerationField('status', ['受領']),
-    textField('contactPerson'),
-    dateField('date')
+const statusType = enumerationType('status', 'aa', ['受領']);
+
+const PaymentInformationRequest = Core.recordType('PaymentInformationRequest', 'test', [
+    textField('shopId', '店舗'),
+    recordField('status', 'test', statusType),
+    textField('contactPerson', 'test'),
+    dateField('date', 'test')
 ]);
 
 const storeConfig = {
@@ -19,7 +22,7 @@ const storeConfig = {
   port: 27017,
   db: 'ameba',
   user: 'amebaadmin',
-  password: 'password',
+  password: 'ameba7531',
 };
 
 const storeService = require('ameba-service')(storeConfig);
